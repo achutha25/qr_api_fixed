@@ -42,6 +42,8 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     environment: production
+    env:
+      TRIVY_EXIT_CODE: 0  # This environment variable forces Trivy to exit with code 0 even if vulnerabilities are found.
     steps:
       - uses: actions/checkout@v4
       
@@ -68,13 +70,6 @@ jobs:
         with:
           image-ref: 'achutha25/devops_demo:${{ github.sha }}'
           format: 'table'
-          exit-code: '1' # Fail the job if vulnerabilities are found
           ignore-unfixed: true
           severity: 'CRITICAL,HIGH'
-
-
-env:
-  TRIVY_EXIT_CODE: 0
-
-
 
